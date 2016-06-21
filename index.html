@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
+    <script src="js/metricsgraphics.min.js"></script>
+
+    <link href="css/metricsgraphics.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="commute-time"></div>
+
+    <script>
+      d3.csv('commute_time.csv', function(data) {
+        var new_data = [];
+        for (var i = 0; i < data.length; ++i) {
+          new_data.push({
+            'start_time': new Date(data[i].start_time),
+            'duration': data[i].duration / 60,
+            'destination': data[i].destination,
+          })
+        }
+
+        MG.data_graphic({
+          title: "Commute Time",
+          description: "How long my commute takes",
+          data: new_data,
+          width: 600,
+          height: 400,
+          target: '#commute-time',
+          x_accessor: 'start_time',
+          y_accessor: 'duration',
+          area: false,
+        })
+      })
+    </script>
+  </body>
