@@ -1,15 +1,31 @@
 <html lang="en">
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
     <script src="js/metricsgraphics.min.js"></script>
 
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
     <link href="css/metricsgraphics.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <div id="commute-time"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-3">
+          <h2>Commute Time</h2>
+          <p>I track my commute time using a <a rel="nofollow" href="https://ifttt.com/products/do/button">DO Button</a>
+          that logs the current time and my location to a spreadsheet. <a rel="nofollow" href="https://github.com/ssaamm/personal-etl/blob/master/commute_time.py">This script</a>
+          processes that spreadsheet and spits out data that's easier to graph
+          with <a rel="nofollow" href="http://metricsgraphicsjs.org/">MetricsGraphics.js</a>.</p>
+        </div>
+        <div class="col-xs-12 col-md-9" id="commute-time"></div>
+      </div>
+    </div>
 
     <script>
       d3.csv('commute_time.csv', function(data) {
@@ -23,15 +39,18 @@
         }
 
         MG.data_graphic({
-          title: "Commute Time",
-          description: "How long my commute takes",
+          //title: "Commute Time",
+          //description: "How long my commute takes",
           data: new_data,
-          width: 600,
+          full_width: true,
           height: 400,
+          right: 40,
           target: '#commute-time',
           x_accessor: 'start_time',
           y_accessor: 'duration',
+          y_label: 'Duration (min)',
           area: false,
+          interpolate: 'basic',
         })
       })
     </script>
