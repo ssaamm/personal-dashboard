@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -40,19 +41,14 @@
 
     <script>
       d3.csv('commute_time.csv', function(data) {
-        var new_data = [];
-        for (var i = 0; i < data.length; ++i) {
-          new_data.push({
-            'start_time': new Date(data[i].start_time),
-            'duration': data[i].duration / 60,
-            'destination': data[i].destination,
-          })
-        }
-
         MG.data_graphic({
-          //title: "Commute Time",
-          //description: "How long my commute takes",
-          data: new_data,
+          data: data.map(function transform(point) {
+            return {
+              'start_time': new Date(point.start_time),
+              'duration': point.duration / 60,
+              'destination': point.destination,
+            };
+          }),
           full_width: true,
           height: 400,
           right: 40,
@@ -61,21 +57,18 @@
           y_accessor: 'duration',
           y_label: 'Duration (min)',
           area: false,
-          interpolate: 'basic',
-        })
-      })
+          interpolate: 'linear',
+        });
+      });
 
       d3.csv('mileage.csv', function(data) {
-        var new_data = [];
-        for (var i = 0; i < data.length; ++i) {
-          new_data.push({
-            'timestamp': new Date(data[i].timestamp),
-            'mileage': parseInt(data[i].mileage),
-          })
-        }
-
         MG.data_graphic({
-          data: new_data,
+          data: data.map(function transform(point) {
+            return {
+              'timestamp': new Date(point.timestamp),
+              'mileage': parseInt(point.mileage),
+            };
+          }),
           full_width: true,
           height: 400,
           right: 40,
@@ -84,9 +77,9 @@
           y_accessor: 'mileage',
           y_label: 'Miles driven',
           area: false,
-          interpolate: 'basic',
+          interpolate: 'monotone',
           min_y_from_data: true,
-        })
-      })
+        });
+      });
     </script>
   </body>
