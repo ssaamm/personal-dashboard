@@ -31,9 +31,11 @@
       <div class="row">
         <div class="col-xs-12 col-sm-3">
           <h2>Mileage</h2>
-          <p>I record my odometer's reading on a semi-regular basis in a Google Sheet.
-          <a rel="nofollow" href="https://github.com/ssaamm/personal-etl/blob/master/mileage.py">This script</a>
-          processes that spreadsheet.
+          <p>I record my odometer's reading on a semi-regular basis in a Google
+          Sheet. Combining that with my spending data, I know that I currently
+          average $<span id="cost-per-mile">1.42</span>/mi. I expect this number
+          to come down as the costs of depreciation, tax/registration, and
+          insurance amortize.</p>
         </div>
         <div class="col-xs-12 col-sm-9" id="mileage"></div>
       </div>
@@ -112,5 +114,12 @@
           area: false,
         });
       });
+
+    d3.csv('cost_of_ownership.csv', function(data) {
+      var total = data.filter(function(cost) {
+        return cost.category === "Total";
+      })[0];
+      $("#cost-per-mile").html(Math.round(total.cost_noreimburse * 1000) / 1000);
+    });
     </script>
   </body>
