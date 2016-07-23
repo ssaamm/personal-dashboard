@@ -54,16 +54,20 @@
             return {
               'start_time': new Date(point.start_time),
               'duration': point.duration / 60,
-              'destination': point.destination,
+              'destination': point.destination == 'WORK' ? 'Work' :
+                point.destination == 'HOME' ? 'Home' : 'Unknown',
             };
           }),
           full_width: true,
           height: 400,
           right: 40,
+          chart_type: 'point',
           target: '#commute-time',
           x_accessor: 'start_time',
           y_accessor: 'duration',
           y_label: 'Duration (min)',
+          color_accessor: 'destination',
+          color_type: 'category',
           area: false,
           interpolate: 'linear',
         });
