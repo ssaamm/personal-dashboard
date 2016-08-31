@@ -42,8 +42,19 @@
 
       <div class="row">
         <div class="col-xs-12 col-sm-3">
+          <h2>Weight</h2>
+          <p>I found a cheap bathroom scale at a thrift store. It's a bit jumpy,
+          so I step on and off the scale until I get the same reading twice in a
+          row. It usually only takes two weigh-ins, but sometimes it'll take 3
+          or 4.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9" id="weight"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
           <h2>Hours Worked</h2>
-          <p>I track when I work using <a rel="nofollow" href="https://github.com/ssaamm/worklog.md">worklog.md</a>.
+          <p>I track when I work using <a rel="nofollow" href="https://github.com/ssaamm/worklog.md">worklog.md</a>.</p>
         </div>
         <div class="col-xs-12 col-sm-9" id="working-time"></div>
       </div>
@@ -112,6 +123,37 @@
           y_accessor: 'hours',
           y_label: 'Duration (h)',
           area: false,
+        });
+      });
+
+      d3.csv('weight.csv', function(data) {
+        all_data = [null, null];
+
+        all_data[0] = data.map(function transform(point) {
+          return {
+            'date': new Date(point.date + ' 12:00'),
+            'value': parseFloat(point.min_weight),
+          };
+        });
+
+        all_data[1] = data.map(function transform(point) {
+          return {
+            'date': new Date(point.date + ' 12:00'),
+            'value': parseFloat(point.max_weight),
+          };
+        });
+
+        MG.data_graphic({
+          data: all_data,
+          full_width: true,
+          height: 400,
+          right: 40,
+          target: '#weight',
+          y_label: 'Weight (lb)',
+          legend: ['Min. daily weight', 'Max. daily weight'],
+          legend_target: '.legend',
+          area: false,
+          min_y_from_data: true,
         });
       });
 
