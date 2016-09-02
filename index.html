@@ -53,6 +53,15 @@
 
       <div class="row">
         <div class="col-xs-12 col-sm-3">
+          <h2>Exercise</h2>
+          <p>I try to keep it simple. What percentage of days in the last
+          week did I work out?</p>
+        </div>
+        <div class="col-xs-12 col-sm-9" id="exercise"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
           <h2>Hours Worked</h2>
           <p>I track when I work using <a rel="nofollow" href="https://github.com/ssaamm/worklog.md">worklog.md</a>.</p>
         </div>
@@ -122,6 +131,23 @@
           x_accessor: 'date',
           y_accessor: 'hours',
           y_label: 'Duration (h)',
+          area: false,
+        });
+      });
+
+      d3.csv('workouts.csv', function(data) {
+        MG.data_graphic({
+          data: data.map(function transform(point) {
+            return {
+              'date': new Date(point.date + ' 00:01'),
+              'value': parseFloat(point.pct_last_wk_worked_out),
+            }
+          }),
+          full_width: true,
+          height: 400,
+          right: 40,
+          interpolate: 'linear',
+          target: '#exercise',
           area: false,
         });
       });
