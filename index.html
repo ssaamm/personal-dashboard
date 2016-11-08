@@ -60,13 +60,6 @@
         <div class="col-xs-12 col-sm-9" id="exercise"></div>
       </div>
 
-      <div class="row">
-        <div class="col-xs-12 col-sm-3">
-          <h2>Hours Worked</h2>
-          <p>I track when I work using <a rel="nofollow" href="https://github.com/ssaamm/worklog.md">worklog.md</a>.</p>
-        </div>
-        <div class="col-xs-12 col-sm-9" id="working-time"></div>
-      </div>
     </div>
 
     <script>
@@ -113,25 +106,6 @@
           area: false,
           interpolate: 'monotone',
           min_y_from_data: true,
-        });
-      });
-
-      d3.csv('working_time.csv', function(data) {
-        MG.data_graphic({
-          data: data.map(function transform(point) {
-            return {
-              'date': new Date(point.date + ' 12:00'),
-              'hours': point.hours,
-            };
-          }),
-          full_width: true,
-          height: 400,
-          right: 40,
-          target: '#working-time',
-          x_accessor: 'date',
-          y_accessor: 'hours',
-          y_label: 'Duration (h)',
-          area: false,
         });
       });
 
