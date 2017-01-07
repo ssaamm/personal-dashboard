@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
+    <script src='https://d3js.org/d3.v4.min.js' charset='utf-8'></script>
     <script src="js/metricsgraphics.min.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
@@ -19,7 +19,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-sm-3">
-          <h2>Mileage</h2>
+          <h2>Weekly miles</h2>
           <p>I record my odometer's reading on a semi-regular basis in a Google
           Sheet. Combining that with my spending data, I know that I currently
           average $<span id="cost-per-mile">0.796</span>/mi. I expect this number
@@ -54,20 +54,19 @@
         MG.data_graphic({
           data: data.map(function transform(point) {
             return {
-              'timestamp': new Date(point.timestamp),
-              'mileage': parseInt(point.mileage),
+              'timestamp': new Date(point.week_ending + ' 12:00'),
+              'miles_driven': parseInt(point.miles_driven),
             };
           }),
           full_width: true,
           height: 400,
           right: 40,
           target: '#mileage',
-          x_accessor: 'timestamp',
-          y_accessor: 'mileage',
-          y_label: 'Miles driven',
           area: false,
-          interpolate: 'monotone',
-          min_y_from_data: true,
+          interpolate: d3.curveStep,
+          x_accessor: 'timestamp',
+          y_accessor: 'miles_driven',
+          y_label: 'Miles driven',
         });
       });
 
@@ -82,7 +81,7 @@
           full_width: true,
           height: 400,
           right: 40,
-          interpolate: 'linear',
+          interpolate: d3.curveMonotoneX,
           target: '#exercise',
           area: false,
         });
@@ -116,6 +115,7 @@
           legend_target: '.legend',
           area: false,
           min_y_from_data: true,
+          max_y: 139,
         });
       });
 
