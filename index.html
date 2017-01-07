@@ -22,7 +22,7 @@
           <h2>Mileage</h2>
           <p>I record my odometer's reading on a semi-regular basis in a Google
           Sheet. Combining that with my spending data, I know that I currently
-          average $<span id="cost-per-mile">1.42</span>/mi. I expect this number
+          average $<span id="cost-per-mile">0.796</span>/mi. I expect this number
           to come down as the costs of depreciation, tax/registration, and
           insurance amortize.</p>
         </div>
@@ -32,10 +32,8 @@
       <div class="row">
         <div class="col-xs-12 col-sm-3">
           <h2>Weight</h2>
-          <p>I found a cheap bathroom scale at a thrift store. It's a bit jumpy,
-          so I step on and off the scale until I get the same reading twice in a
-          row. It usually only takes two weigh-ins, but sometimes it'll take 3
-          or 4.</p>
+          <p>I linearly interpolate weight readings and then take a rolling
+          weekly average</p>
         </div>
         <div class="col-xs-12 col-sm-9" id="weight"></div>
       </div>
