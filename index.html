@@ -19,17 +19,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-sm-3">
-          <h2>Commute Time</h2>
-          <p>I track my commute time using a <a rel="nofollow" href="https://ifttt.com/products/do/button">DO Button</a>
-          that logs the current time and my location to a spreadsheet. <a rel="nofollow" href="https://github.com/ssaamm/personal-etl/blob/master/commute_time.py">This script</a>
-          processes that spreadsheet and spits out data that's easier to graph
-          with <a rel="nofollow" href="http://metricsgraphicsjs.org/">MetricsGraphics.js</a>.</p>
-        </div>
-        <div class="col-xs-12 col-sm-9" id="commute-time"></div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12 col-sm-3">
           <h2>Mileage</h2>
           <p>I record my odometer's reading on a semi-regular basis in a Google
           Sheet. Combining that with my spending data, I know that I currently
@@ -63,31 +52,6 @@
     </div>
 
     <script>
-      d3.csv('commute_time.csv', function(data) {
-        MG.data_graphic({
-          data: data.map(function transform(point) {
-            return {
-              'start_time': new Date(point.start_time),
-              'duration': point.duration / 60,
-              'destination': point.destination == 'WORK' ? 'Work' :
-                point.destination == 'HOME' ? 'Home' : 'Unknown',
-            };
-          }),
-          full_width: true,
-          height: 400,
-          right: 40,
-          chart_type: 'point',
-          target: '#commute-time',
-          x_accessor: 'start_time',
-          y_accessor: 'duration',
-          y_label: 'Duration (min)',
-          color_accessor: 'destination',
-          color_type: 'category',
-          area: false,
-          interpolate: 'linear',
-        });
-      });
-
       d3.csv('mileage.csv', function(data) {
         MG.data_graphic({
           data: data.map(function transform(point) {
