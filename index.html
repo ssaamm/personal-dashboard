@@ -88,31 +88,18 @@
       });
 
       d3.csv('weight.csv', function(data) {
-        all_data = [null, null];
-
-        all_data[0] = data.map(function transform(point) {
-          return {
-            'date': new Date(point.date + ' 12:00'),
-            'value': parseFloat(point.min_weight),
-          };
-        });
-
-        all_data[1] = data.map(function transform(point) {
-          return {
-            'date': new Date(point.date + ' 12:00'),
-            'value': parseFloat(point.max_weight),
-          };
-        });
-
         MG.data_graphic({
-          data: all_data,
+          data: data.map(function transform(point) {
+            return {
+              'date': new Date(point.date + ' 12:00'),
+              'value': parseFloat(point.min_weight),
+            };
+          }),
           full_width: true,
           height: 400,
           right: 40,
           target: '#weight',
           y_label: 'Weight (lb)',
-          legend: ['Min. daily weight', 'Max. daily weight'],
-          legend_target: '.legend',
           area: false,
           min_y_from_data: true,
           max_y: 139,
