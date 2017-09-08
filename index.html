@@ -75,18 +75,29 @@
       });
 
       d3.csv('workouts.csv', function(data) {
+        all_data = [null, null];
+        all_data[0] = data.map(function transform(point) {
+          return {
+            'date': new Date(point.date + ' 12:00'),
+            'value': parseFloat(point.worked_out_7d),
+          }
+        });
+        all_data[1] = data.map(function transform(point) {
+          return {
+            'date': new Date(point.date + ' 12:00'),
+            'value': parseFloat(point.worked_out_28d),
+          }
+        });
+
         MG.data_graphic({
-          data: data.map(function transform(point) {
-            return {
-              'date': new Date(point.date + ' 00:01'),
-              'value': parseFloat(point.pct_last_wk_worked_out),
-            }
-          }),
+          data: all_data,
           full_width: true,
           height: 400,
           right: 40,
           interpolate: d3.curveMonotoneX,
           target: '#exercise',
+          legend: ['7d average', '28d average'],
+          legend_target: '.legend',
           area: false,
           min_x: three_mo_ago,
         });
