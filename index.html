@@ -79,13 +79,13 @@
         all_data[0] = data.map(function transform(point) {
           return {
             'date': new Date(point.date + ' 12:00'),
-            'value': parseFloat(point.worked_out_7d),
+            'value': point.worked_out_7d === '' ? 0.0 : parseFloat(point.worked_out_7d),
           }
         });
         all_data[1] = data.map(function transform(point) {
           return {
             'date': new Date(point.date + ' 12:00'),
-            'value': parseFloat(point.worked_out_28d),
+            'value': point.worked_out_28d === '' ? 0.0 : parseFloat(point.worked_out_28d),
           }
         });
 
