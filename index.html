@@ -50,8 +50,8 @@
     </div>
 
     <script>
-      var three_mo_ago = new Date();
-      three_mo_ago.setMonth(three_mo_ago.getMonth() - 3);
+      var six_mo_ago = new Date();
+      six_mo_ago.setMonth(six_mo_ago.getMonth() - 6);
 
       d3.csv('mileage.csv', function(data) {
         MG.data_graphic({
@@ -70,7 +70,7 @@
           x_accessor: 'timestamp',
           y_accessor: 'miles_driven',
           y_label: 'Miles driven',
-          min_x: three_mo_ago,
+          min_x: six_mo_ago,
         });
       });
 
@@ -99,7 +99,7 @@
           legend: ['7d average', '28d average'],
           legend_target: '.legend',
           area: false,
-          min_x: three_mo_ago,
+          min_x: six_mo_ago,
         });
       });
 
@@ -119,7 +119,7 @@
           area: false,
           min_y_from_data: true,
           max_y: 139,
-          min_x: three_mo_ago,
+          min_x: six_mo_ago,
         });
       });
 
