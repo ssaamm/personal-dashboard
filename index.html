@@ -32,8 +32,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-3">
           <h2>Weight</h2>
-          <p>I linearly interpolate weight readings and then take a rolling
-          weekly average</p>
+          <p>Weekly mean with a 90% confidence interval</p>
         </div>
         <div class="col-xs-12 col-sm-9" id="weight"></div>
       </div>
@@ -108,7 +107,9 @@
           data: data.map(function transform(point) {
             return {
               'date': new Date(point.date + ' 12:00'),
-              'value': parseFloat(point.min_weight),
+              'value': parseFloat(point.mean),
+              'low': parseFloat(point.low),
+              'high': parseFloat(point.high),
             };
           }),
           full_width: true,
@@ -120,6 +121,7 @@
           min_y_from_data: true,
           max_y: 139,
           min_x: six_mo_ago,
+          show_confidence_band: ['low', 'high'],
         });
       });
 
