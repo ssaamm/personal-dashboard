@@ -31,6 +31,14 @@
 
       <div class="row">
         <div class="col-xs-12 col-sm-3">
+          <h2>Bike mileage</h2>
+          <p>Miles on the bike</p>
+        </div>
+        <div class="col-xs-12 col-sm-9" id="bikestats"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
           <h2>Weight</h2>
           <p>Weekly mean with a 90% confidence interval</p>
         </div>
@@ -69,6 +77,27 @@
           x_accessor: 'timestamp',
           y_accessor: 'miles_driven',
           y_label: 'Miles driven',
+          min_x: six_mo_ago,
+        });
+      });
+
+      d3.csv('bike_stats.csv', function(data) {
+        MG.data_graphic({
+          data: data.map(function transform(point) {
+            return {
+              'timestamp': new Date(point.timestamp + ' 12:00'),
+              'distance': parseInt(point.distance),
+            };
+          }),
+          full_width: true,
+          height: 400,
+          right: 40,
+          target: '#bikestats',
+          area: false,
+          interpolate: d3.curveStep,
+          x_accessor: 'timestamp',
+          y_accessor: 'distance',
+          y_label: 'Miles ridden',
           min_x: six_mo_ago,
         });
       });
